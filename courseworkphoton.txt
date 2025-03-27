@@ -1,0 +1,70 @@
+#s:Gr/ViewA/Type = "OpenGL"
+#b:Ts/UseQt = "True"
+#b:Ts/PauseBeforeQuit="True"
+
+#==================== World ====================
+s:Ge/World/Material = "Air"
+d:Ge/World/HLX = 30.0 cm
+d:Ge/World/HLY = 30.0 cm
+d:Ge/World/HLZ = 40.0 cm
+
+#==================== Water Phantom ====================
+s:Ge/Phantom/Type = "TsBox"
+s:Ge/Phantom/Parent = "World"
+s:Ge/Phantom/Material = "G4_WATER"
+d:Ge/Phantom/HLX = 15.0 cm
+d:Ge/Phantom/HLY = 15.0 cm
+d:Ge/Phantom/HLZ = 22.5 cm
+s:Ge/Phantom/Color = "Blue"
+
+#==================== BeamPosition ====================
+
+s:Ge/MyBeamPosition/Type = "TsSphere"
+s:Ge/MyBeamPosition/Parent = "World"
+s:Ge/MyBeamPosition/Material     = "Air" 
+d:Ge/MyBeamPosition/RMin         = 0 m       	
+d:Ge/MyBeamPosition/RMax         = 0.05 m
+d:Ge/MyBeamPosition/SPhi         = 0. deg    	
+d:Ge/MyBeamPosition/DPhi         = 360. deg  	
+d:Ge/MyBeamPosition/STheta       = 0. deg    	
+d:Ge/MyBeamPosition/DTheta       = 180. deg  	
+d:Ge/MyBeamPosition/TransX       = 0. m   	
+d:Ge/MyBeamPosition/TransY       = 0. m
+d:Ge/MyBeamPosition/TransZ       = -0.3 m
+d:Ge/MyBeamPosition/RotX         = 0. deg 
+d:Ge/MyBeamPosition/RotY         = 0. deg
+d:Ge/MyBeamPosition/RotZ         = 0. deg
+s:Ge/MyBeamPosition/DrawingStyle = "WireFrame"
+s:Ge/MyBeamPosition/Color    	= "white"
+
+#==================== Photon Beam (6 MeV) ====================
+i:So/PhotonBeam/NumberOfHistoriesInRun = 2000000
+s:So/PhotonBeam/Type = "Beam"
+s:So/PhotonBeam/Component = "MyBeamPosition" 
+s:So/PhotonBeam/BeamParticle = "gamma"
+d:So/PhotonBeam/BeamEnergy = 6 MeV
+u:So/PhotonBeam/BeamEnergySpread = 0.1  # 0.1% energy spread
+s:So/PhotonBeam/BeamPositionDistribution = "Gaussian"
+s:So/PhotonBeam/BeamPositionCutoffShape = "Ellipse"
+d:So/PhotonBeam/BeamPositionSpreadX = 1.67 cm
+d:So/PhotonBeam/BeamPositionSpreadY = 1.67 cm
+d:So/PhotonBeam/BeamPositionCutoffX = 5.0 cm
+d:So/PhotonBeam/BeamPositionCutoffY = 5.0 cm
+s:So/PhotonBeam/BeamAngularDistribution = "Gaussian"
+d:So/PhotonBeam/BeamAngularSpreadX = 0.1 deg 
+d:So/PhotonBeam/BeamAngularSpreadY = 0.1 deg
+d:So/PhotonBeam/BeamAngularCutoffX = 0.1 deg
+d:So/PhotonBeam/BeamAngularCutoffY = 0.1 deg
+
+#==================== Physics List ====================
+#s:So/Physics/PhysicsList = "Geant4_Modular"
+sv:Ph/Default/Modules = 1 "g4em-standard_opt4"
+
+#==================== Scoring (Dose to Medium) ====================
+s:Sc/DosePhotons/Quantity = "DoseToMedium"
+s:Sc/DosePhotons/Component = "Phantom"
+s:Sc/DosePhotons/OutputFile = "dose_photons"
+i:Sc/DosePhotons/ZBins = 150
+s:Sc/DosePhotons/OutputType = "csv"
+s:Sc/DosePhotons/IfOutputFileAlreadyExists = "Overwrite"
+sv:Sc/DosePhotons/Report = 2 "Sum" "Standard_Deviation"

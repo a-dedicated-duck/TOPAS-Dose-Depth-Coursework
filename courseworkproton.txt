@@ -1,0 +1,69 @@
+#s:Gr/ViewA/Type = "OpenGL"
+#b:Ts/UseQt = "True"
+#b:Ts/PauseBeforeQuit="True"
+
+#==================== World ====================
+s:Ge/World/Material = "Air"
+d:Ge/World/HLX = 30.0 cm
+d:Ge/World/HLY = 30.0 cm
+d:Ge/World/HLZ = 40.0 cm
+
+#==================== Water Phantom ====================
+s:Ge/Phantom/Type = "TsBox"
+s:Ge/Phantom/Parent = "World"
+s:Ge/Phantom/Material = "G4_WATER"
+d:Ge/Phantom/HLX = 15.0 cm
+d:Ge/Phantom/HLY = 15.0 cm
+d:Ge/Phantom/HLZ = 22.5 cm
+s:Ge/Phantom/Color = "Blue"
+
+#==================== BeamPosition ====================
+
+s:Ge/MyBeamPosition/Type = "TsSphere"
+s:Ge/MyBeamPosition/Parent = "World"
+s:Ge/MyBeamPosition/Material     = "Air" 
+d:Ge/MyBeamPosition/RMin         = 0 m       	
+d:Ge/MyBeamPosition/RMax         = 0.05 m
+d:Ge/MyBeamPosition/SPhi         = 0. deg    	
+d:Ge/MyBeamPosition/DPhi         = 360. deg  	
+d:Ge/MyBeamPosition/STheta       = 0. deg    	
+d:Ge/MyBeamPosition/DTheta       = 180. deg  	
+d:Ge/MyBeamPosition/TransX       = 0. m   	
+d:Ge/MyBeamPosition/TransY       = 0. m
+d:Ge/MyBeamPosition/TransZ       = -0.3 m
+d:Ge/MyBeamPosition/RotX         = 0. deg 
+d:Ge/MyBeamPosition/RotY         = 0. deg
+d:Ge/MyBeamPosition/RotZ         = 0. deg
+s:Ge/MyBeamPosition/DrawingStyle = "WireFrame"
+s:Ge/MyBeamPosition/Color    	= "white"
+
+#==================== Proton Beam (250 MeV) ====================#
+i:So/ProtonBeam/NumberOfHistoriesInRun = 2000000
+s:So/ProtonBeam/Type = "Beam"
+s:So/ProtonBeam/Component = "MyBeamPosition" 
+s:So/ProtonBeam/BeamParticle = "proton"
+d:So/ProtonBeam/BeamEnergy = 250.0 MeV
+u:So/ProtonBeam/BeamEnergySpread = 0.1  # 0.1% energy spread
+s:So/ProtonBeam/BeamPositionDistribution = "Gaussian"
+s:So/ProtonBeam/BeamPositionCutoffShape = "Ellipse"
+d:So/ProtonBeam/BeamPositionSpreadX = 1.5 mm
+d:So/ProtonBeam/BeamPositionSpreadY = 1.5 mm
+d:So/ProtonBeam/BeamPositionCutoffX = 1.5 mm
+d:So/ProtonBeam/BeamPositionCutoffY = 1.5 mm
+s:So/ProtonBeam/BeamAngularDistribution = "Gaussian"
+d:So/ProtonBeam/BeamAngularSpreadX = 0.1 deg 
+d:So/ProtonBeam/BeamAngularSpreadY = 0.1 deg
+d:So/ProtonBeam/BeamAngularCutoffX = 0.1 deg
+d:So/ProtonBeam/BeamAngularCutoffY = 0.1 deg
+
+#==================== Physics List ====================
+#s:So/Physics/PhysicsList = "Geant4_Modular"
+sv:Ph/Default/Modules = 2 "g4h-phy_QGSP_BIC" "g4em-standard_opt3"
+#==================== Scoring (Dose to Medium) ====================
+s:Sc/DoseProtons/Quantity = "DoseToMedium"
+s:Sc/DoseProtons/Component = "Phantom"
+s:Sc/DoseProtons/OutputFile = "dose_protons"
+i:Sc/DoseProtons/ZBins=150
+s:Sc/DoseProtons/OutputType = "csv"
+s:Sc/DoseProtons/IfOutputFileAlreadyExists = "Overwrite"
+sv:Sc/DoseProtons/Report = 2 "Sum" "Standard_Deviation"
